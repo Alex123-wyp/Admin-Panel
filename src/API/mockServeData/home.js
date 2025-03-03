@@ -1,11 +1,11 @@
-// mock数据模拟
+// mock
 import Mock from 'mockjs'
 
-// 图表数据
+// charts data
 let List = []
 export default {
   getStatisticalData: () => {
-    //Mock.Random.float 产生随机数100到8000之间 保留小数 最小0位 最大0位
+    //Mock.Random.float
     for (let i = 0; i < 7; i++) {
       List.push(
         Mock.mock({
@@ -21,7 +21,7 @@ export default {
     return {
       code: 20000,
       data: {
-        // 饼图
+        //pie
         videoData: [
           {
             name: '小米',
@@ -48,7 +48,7 @@ export default {
             value: 4500
           }
         ],
-        // 柱状图
+        // Bar chart
         userData: [
           {
             date: '周一',
@@ -86,7 +86,7 @@ export default {
             active: 170
           }
         ],
-        // 折线图
+        // line chart
         orderData: {
           date: ['20191001', '20191002', '20191003', '20191004', '20191005', '20191006', '20191007'],
           data: List

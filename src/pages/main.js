@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
-import { Layout, theme, Col, Row } from 'antd';
+import React from 'react';
+import { Layout, theme} from 'antd';
 import CommonSider from '../components/commonSider/commonSider'
 import CommonHeader from "../components/commonHeader/commonHeader";
 import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
+import { RouterAuth } from '../router/routerAuth';
+
+
 const { Content } = Layout;
 const Main = () => {
     // const [collapsed, setCollapsed] = useState(false);
@@ -20,7 +23,8 @@ const Main = () => {
     const collapse = useSelector(state => state.tab.isCollapse);
     
     return(
-      <Layout className='main-container'>
+      <RouterAuth>
+         <Layout className='main-container'>
     {/**
      * There is a problem that should be pay attention to, which confused me for 10 minutes:
      * There are two ways for collapse to pass to subcomponent, which is:
@@ -46,7 +50,9 @@ const Main = () => {
           <Outlet/>
         </Content>
       </Layout>
-    </Layout>            
+    </Layout>           
+      </RouterAuth>
+      
     )
 }
 

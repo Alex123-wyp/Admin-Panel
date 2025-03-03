@@ -1,26 +1,36 @@
 import React, { use } from "react";
 import { Button, Layout, Avatar, Dropdown } from 'antd';
-import commonHeader from './commonHeader.css'
 import {MenuFoldOutlined, MenuUnfoldOutlined, ArrowLeftOutlined, UserOutlined} from '@ant-design/icons'
 import { useDispatch } from "react-redux";
 import {collapseMenu} from "../../store/reducers/tab"
+import { Navigate, useNavigate } from "react-router-dom";
+import './commonHeader.css'
 const { Header } = Layout;
-const items = [
-  {
-    key: '1',
-    label: 'Profile',
-    icon: <UserOutlined />
-  },
-  {
-    key: '2',
-    label: 'Logout',
-    icon: <ArrowLeftOutlined />
-  }
-]
+
 
 const CommonHeader = ({collapse}) => {
-  // const logout = () => {
-  // }
+  const navigate = useNavigate()
+  const logout = () => {
+    //clear token
+    localStorage.removeItem('token');
+    navigate('/login');
+  }
+
+  const items = [
+    {
+      key: '1',
+      label: 'Profile',
+      icon: <UserOutlined />
+    },
+    {
+      key: '2',
+      label: (<a onClick={() => logout()}>
+        Log out
+      </a>),
+      icon: <ArrowLeftOutlined />
+    }
+  ]
+
   const dispatch = useDispatch();
   const setCollapsed = () => {
     dispatch(collapseMenu());

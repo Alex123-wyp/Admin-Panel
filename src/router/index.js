@@ -6,6 +6,9 @@ import Mall from '../pages/mall/mall'
 import Other from '../pages/other/other'
 import PageOne from '../pages/other/pageOne/pageOne'
 import PageTwo from '../pages/other/pageTwo/pageTwo'
+import login from '../pages/login/login'
+import Login from '../pages/login/login'
+import { Component } from 'react'
 
 
 
@@ -45,7 +48,11 @@ const routes = [
                 ]
             }
         ]
-    }
+    },
+    {
+        path: '/login',
+        Component: Login
+    },
 ]
 
 export default createBrowserRouter(routes); 

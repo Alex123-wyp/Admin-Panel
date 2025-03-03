@@ -1,6 +1,6 @@
 import Mock from 'mockjs'
 
-// get请求从config.url获取参数，post从config.body中获取参数
+
 function param2Obj (url) {
   const search = url.split('?')[1]
   if (!search) {
@@ -34,8 +34,8 @@ for (let i = 0; i < count; i++) {
 
 export default {
   /**
-   * 获取列表
-   * 要带参数 name, page, limt; name可以不填, page,limit有默认值。
+   * getList
+   * params: name, page, limt; name can be null, page,limit have default value
    * @param name, page, limit
    * @return {{code: number, count: number, data: *[]}}
    */
@@ -53,7 +53,7 @@ export default {
     }
   },
   /**
-   * 增加用户
+   * create user
    * @param name, addr, age, birth, sex
    * @return {{code: number, data: {message: string}}}
    */
@@ -70,12 +70,12 @@ export default {
     return {
       code: 20000,
       data: {
-        message: '添加成功'
+        message: 'Succeed!'
       }
     }
   },
   /**
-   * 删除用户
+   * delete users
    * @param id
    * @return {*}
    */
@@ -84,18 +84,18 @@ export default {
     if (!id) {
       return {
         code: -999,
-        message: '参数不正确'
+        message: 'param wrong!'
       }
     } else {
       List = List.filter(u => u.id !== id)
       return {
         code: 20000,
-        message: '删除成功'
+        message: 'delete succeed!'
       }
     }
   },
   /**
-   * 批量删除
+   * delete
    * @param config
    * @return {{code: number, data: {message: string}}}
    */
@@ -106,12 +106,12 @@ export default {
     return {
       code: 20000,
       data: {
-        message: '批量删除成功'
+        message: 'delete succeed!'
       }
     }
   },
   /**
-   * 修改用户
+   * update user
    * @param id, name, addr, age, birth, sex
    * @return {{code: number, data: {message: string}}}
    */
@@ -131,7 +131,7 @@ export default {
     return {
       code: 20000,
       data: {
-        message: '编辑成功'
+        message: 'edit succeed!'
       }
     }
   }

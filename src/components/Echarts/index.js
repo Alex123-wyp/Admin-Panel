@@ -1,8 +1,6 @@
-import { Divider  } from "antd";
-import axios from "axios";
+
 import React, { useEffect, useRef } from "react";
-
-
+import * as echarts from 'echarts';
 //echarts configure
 const axisOption = {
     // text color
@@ -59,21 +57,23 @@ const axisOption = {
   const Echarts = ({style, chartData, isAxisChart = true}) => {
     //get dom instance
     const echartRef = useRef();
+    const echartObj = useRef(null);
     useEffect(() => {
-        let options;
-        //echarts initilize
-        myChart = echarts.init(echartRef.current);
-        //set option
+        let options
+        //echarts initialization
+        echartObj.current = echarts.init(echartRef.current);
+        //set options
         if(isAxisChart){
-            axisOption.xAxis.data = chartData.xData
-            axisOption.series = chartData.series;
-            options = axisOption
-        } else{
-            normalOption.series = chartData.series
-            options = normalOption
+          //set xAxis data
+          axisOption.xAxis.data = chartData.xData
+          axisOption.series = chartData.series
+          options = axisOption;
+        }else{
+          normalOption.series = chartData.series
+          options = normalOption
         }
-        myChart.setOption(options)
-    }, [chartData])
+        echartObj.current.setOption(options)
+    }, [chartData]);
     return(
         <div style={style} ref={echartRef}></div>
         

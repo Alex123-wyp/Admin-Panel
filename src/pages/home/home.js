@@ -4,30 +4,62 @@ import './home.css'
 import { getData } from '../../API';
 import * as Icon from '@ant-design/icons';
 import MyEchart from '../../components/Echarts'
-import { type } from '@testing-library/user-event/dist/type';
+
 
 
 const iconToElement = (name) => React.createElement(Icon[name]);
 const Home = () => {
     const userImg = require('../../assets/images/user.png')
+    //build echarts responisve data
+    const [echartData, setEchartData] = useState([]);
+
     useEffect(() => {
         getData().then(({data}) => {
-            const {tableData, orderData} = data.data;
+            const {tableData, orderData, userData, videoData} = data.data;
             setTableData(tableData);
-        })
-
-        //echarts data get
-        const order = orderData
-        //xAxis data
-        const Xdata = order.date;
-        //series data
-        const keyArray = Object.keys(order.data[0]);
-        keyArray.forEach(key => {
-          series.push({
-            name: key,
-            data: order.data.map(item => item[key]);
-            type: 'line'
-          })
+            //set echart data
+            const order = orderData;
+            //set xData
+            const xData = order.date;
+            //series data
+            const keyArray = Object.keys(order.data[0]);
+            const series = [];
+            keyArray.forEach(key => {
+                series.push({
+                    name: key,
+                    data: order.data.map(item => item[key]),
+                    type: 'line'
+                })
+            })
+            setEchartData({
+                order: {
+                    xData,
+                    series
+                },
+                user: {
+                    xData: userData.map(item => item.date),
+                    series: [
+                        {
+                            name: 'New users',
+                            data: userData.map(item => item.new),
+                            type: 'bar'
+                        },
+                        {
+                            name: 'Active users',
+                            data: userData.map(item => item.active),
+                            type: 'bar'
+                        },
+                    ],
+                },
+                video: {
+                    series: [
+                        {
+                            data: videoData,
+                            type: 'pie'
+                        }
+                    ]
+                }
+            })
         })
     }, [])
 
@@ -132,7 +164,11 @@ const Home = () => {
                         }
                     </div>
 
-                    <MyEchart  />
+                    { echartData.order && <MyEchart chartData={echartData.order} style={{height: '280px'}} />}
+                    <div className='graph'>
+                        {echartData.user && <MyEchart chartData={echartData.user} style={{height: '240px', width: '50%'}}/> }
+                        {echartData.video && <MyEchart chartData={echartData.video} isAxisChart={false} style={{height: '260px', width: '50%'}}/> }
+                    </div>
                 </Col>
             </Row>
         </div>
